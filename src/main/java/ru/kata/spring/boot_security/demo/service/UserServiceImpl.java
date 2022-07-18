@@ -1,13 +1,11 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
@@ -15,9 +13,9 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.*;
 
-@Service
+@org.springframework.stereotype.Service
 @Transactional
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, Service<User> {
 
     @Autowired
     private UserRepository userRepository;
@@ -59,7 +57,7 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public List<User> getAllUser() {
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
@@ -67,9 +65,5 @@ public class UserService implements UserDetailsService {
     public void  update(User user) {
         userRepository.update(user.getUsername(), bCryptPasswordEncoder().encode(user.getPassword()), user.getId());
 
-    }
-
-    public User findByName(String username) {
-        return userRepository.findByUsername(username);
     }
 }

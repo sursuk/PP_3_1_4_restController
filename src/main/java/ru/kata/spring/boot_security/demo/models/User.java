@@ -4,7 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +20,10 @@ public class User implements UserDetails {
 
     @Column(name = "user_name")
     private String username;
+
+    @Column(name = "age")
+    private int age;
+
 
     @Column(name = "password")
     private String password;
@@ -39,6 +45,14 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override
@@ -90,6 +104,14 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<String> getStringRoles() {
+        List<String> stringRoles = new ArrayList<>();
+        for (Role role : roles) {
+            stringRoles.add(role.getName());
+        }
+        return stringRoles;
     }
 
 }
