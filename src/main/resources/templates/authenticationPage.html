@@ -23,15 +23,21 @@
     </nav>
 </div>
 <div style="background-color: #f8f9fa;"class="row">
+
+
+
     <div style="background-color:white" class="col-2 sidebar">
         <div class="list-group" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home" sec:authorize="hasAuthority('ROLE_ADMIN')">Admin</a>
-            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">User</a>
+            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home" sec:authorize="hasAuthority('ROLE_ADMIN')">Admin</a>
+            <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">User</a>
         </div>
     </div>
+
+
+
     <div class="col-10">
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list" sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list" sec:authorize="hasAuthority('ROLE_ADMIN')">
                 <h1>Admin panel</h1>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -59,8 +65,8 @@
                             <tr th:each="user : ${usersList}">
                                 <th th:text="${user.getId()}" scope="row">1</th>
                                 <td th:text="${user.getUsername()}">Mark</td>
-                                <td th:text="${user.getAge}">26</td>
-                                <td><p th:each="role : ${user.getRoles()}" th:text="${role.getName()}">Role</p></td>
+                                <td th:text="${user.age}">26</td>
+                                <td><p th:each="role : ${user.getRoles()}" th:text="${role.getRole()}">Role</p></td>
                                 <td><!-- Button trigger modal -->
                                     <button
                                             type="button"
@@ -97,14 +103,10 @@
                                                                 <input type="number" id="age1" class="form-control" th:value="${user.getAge()}" th:name="age"/>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="password1"><b>Password</b></label>
-                                                                <input type="password" class="form-control" id="password1" th:field="*{password}"/>
-                                                            </div>
-                                                            <div class="form-group">
                                                                 <label th:for="role1"><b>Role</b></label>
                                                                 <select th:field="*{roles}" size="2" multiple class="form-control" id="role1">
                                                                     <option th:each="role : ${rolesList}"
-                                                                            th:text="${role.getName()}"
+                                                                            th:text="${role.getRole()}"
                                                                             th:value="${role.getId()}"></option>
                                                                 </select>
                                                             </div>
@@ -188,7 +190,7 @@
                                         <label for="role"><b>Role</b></label>
                                         <select th:field="*{roles}" size="2" multiple class="form-control" id="role">
                                             <option th:each="role : ${rolesList}"
-                                                    th:text="${role.getName()}"
+                                                    th:text="${role.getRole()}"
                                                     th:value="${role.getId()}"></option>
                                         </select>
                                     </div>
@@ -199,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">
+            <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">
                 <h4>User information-page</h4>
                 <div class="container">
                     <h6>About user</h6>
@@ -217,7 +219,7 @@
                             <th th:text="${authorisedUser.id}" scope="row">1</th>
                             <td th:text="${authorisedUser.username}">Mark</td>
                             <td th:text="${authorisedUser.age}">26</td>
-                            <td><p th:each="role : ${authorisedUser.roles}" th:text="${role.name}">Admin</p></td>
+                            <td><p th:each="role : ${authorisedUser.roles}" th:text="${role.role}">Admin</p></td>
                         </tr>
                         </tbody>
                     </table>
@@ -225,5 +227,8 @@
             </div>
         </div>
     </div>
+
+
+
 </div>
 </html>
